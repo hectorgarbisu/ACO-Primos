@@ -52,7 +52,7 @@ public class Primo {
         for(int j = 2;j<(Math.log(n)/Math.log(2));j++){
             if((n-1)%Math.pow(2,j)==0){  
                 k = (int) ((n-1)/Math.pow(2,j)); //Esta operacion es segura
-                mcd = mcd((int) (Math.pow(b,k)-1),n);//falta de precision
+                mcd = mcd((int) (Math.pow(b,k)-1),n);//falta de precision <- ARREGLAR ESTO
                 if((1<mcd)&&(mcd<n)) return true;
             }
         }
