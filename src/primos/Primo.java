@@ -1,10 +1,14 @@
 package primos;
+import java.math.BigInteger;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Primo {
 
     public static void main(String[] args) {
+        BigInteger a = new BigInteger("55");
+        a= a.pow(245);
+        System.out.println(a);
         int m = 5;
         int noPrimo;
         int erroresP = 0;
@@ -88,10 +92,6 @@ public class Primo {
             else factorModules[i] = (int) lastModule;
 //            System.out.println(lastModule);
         }
-
         return factorModules;
     }
-
-
-
 }
