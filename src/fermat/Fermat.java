@@ -1,28 +1,18 @@
-package primos;
-import java.math.BigInteger;
+package fermat;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Primo {
-
-    public static void main(String[] args) {
-        BigInteger a = new BigInteger("55");
-        a= a.pow(245);
-        System.out.println(a);
-        int m = 5;
-        int noPrimo;
-        int erroresP = 0;
-        int erroresNP = 0;
-        for (int primo : ColeccionPrimos.primos) {
-            noPrimo = primo+7;
-            if(!esPrimo(primo,m)) erroresP++;
-            if(esPrimo(noPrimo,m)) erroresNP++;
-            System.out.println("primo "+primo+" : "+esPrimo(primo,m)+", no primo "+noPrimo+": "+esPrimo(noPrimo,m));
+public class Fermat {
+    
+    public static boolean esPrimo(int n, int m) {
+        SortedSet<Integer> list = numAle(n, m);
+        for (Integer b : list) {
+            if (expMod(b,n-1,n) != 1)  return false; // expMod debe operar con long
+            if (criterioExtendido(b,n)) return false;
         }
-        System.out.println("Hubo "+erroresP+" erroresP");
-        System.out.println("Hubo "+erroresNP+" erroresNP");
+        return true;
     }
-
+ 
     public static int mcd(int a, int b) {
         while (b != 0) {
             int r = a % b;
@@ -40,14 +30,7 @@ public class Primo {
         return result;
     }
 
-    public static boolean esPrimo(int n, int m) {
-        SortedSet<Integer> list = numAle(n, m);
-        for (Integer b : list) {
-            if (expMod(b,n-1,n) != 1)  return false; // expMod debe operar con long
-//            if (criterioExtendido(b,n)) return false;
-        }
-        return true;
-    }
+
 
     private static boolean criterioExtendido(int b, int n) {
         int k;
@@ -94,4 +77,5 @@ public class Primo {
         }
         return factorModules;
     }
+
 }
