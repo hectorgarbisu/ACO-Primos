@@ -11,15 +11,16 @@ public class FermatBig {
       public static boolean esPrimo(BigInteger n, int m) {
         SortedSet<BigInteger> list = numAle(n, m);
         for (BigInteger b : list) {
-            if (b.modPow(n.subtract(BigInteger.ONE),n).compareTo(BigInteger.ONE)!=0)  return false; // expMod debe operar con long
-//            if (criterioExtendido(b,n)) return false;
+            if (b.modPow(n.subtract(BigInteger.ONE),n).compareTo(BigInteger.ONE)!=0)  return false;
+//            if (criterioExtendido(b,n)) return false; //Comprobacion muy costosa con BigInteger
         }
         return true;
     }
- 
-    public static int mcd(int a, int b) {
-        while (b != 0) {
-            int r = a % b;
+  
+    public static BigInteger mcd(BigInteger a, BigInteger b) {
+        BigInteger r;
+        while (b.compareTo(BigInteger.ZERO)!= 0) {
+            r = a.mod(b);
             a = b;
             b = r;
         }
@@ -36,17 +37,25 @@ public class FermatBig {
 
 
 
-    private static boolean criterioExtendido(int b, int n) {
-        int k;
-        int mcd;
-        for(int j = 2;j<(Math.log(n)/Math.log(2));j++){
-            if((n-1)%Math.pow(2,j)==0){  
-                k = (int) ((n-1)/Math.pow(2,j)); //Esta operacion es segura
-                mcd = mcd((int) (Math.pow(b,k)-1),n);//falta de precision <
-                if((1<mcd)&&(mcd<n)) return true;
+    private static boolean criterioExtendido(BigInteger b, BigInteger n) {
+        BigInteger mcd;
+        BigInteger[] dAndR;
+        BigInteger nHalf = n;
+        int nlog = 100;
+        while(nHalf.compareTo(BigInteger.ONE)>0){
+            nHalf=nHalf.shiftRight(1);
+            nlog++;
+        }
+        for(int j = 2;j<nlog;j++){ 
+            dAndR = n.subtract(BigInteger.ONE).divideAndRemainder(new BigInteger(Integer.toString(j)));
+            if(dAndR[1].compareTo(BigInteger.ZERO)==0){  //(n-1)%Math.pow(2,j)==0
+//              equivalente a: mcd = mcd((int) (Math.pow(b,k)-1),n);
+//              Hay una perdida enorme de tiempo en este calculo, incluso para numeos en el rango de long
+//              mcd = n.gcd(b.pow(dAndR[0].intValueExact()).subtract(BigInteger.ONE)); 
+                mcd = mcd(n,b.pow(dAndR[0].intValueExact()).subtract(BigInteger.ONE));
+                if(mcd.compareTo(BigInteger.ONE)>0&&(mcd.compareTo(n)<0)) return true;
             }
         }
         return false;
     }
-
 }
