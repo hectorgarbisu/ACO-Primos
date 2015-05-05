@@ -8,10 +8,13 @@ import java.util.TreeSet;
 
 public class FermatBig {
     
-      public static boolean esPrimo(BigInteger n, int m) {
+      public static boolean esPrimo(BigInteger n, int m) { /// TAL VEZ NO DEBERIA SER STATIC
         SortedSet<BigInteger> list = numAle(n, m);
         for (BigInteger b : list) {
-            if (b.modPow(n.subtract(BigInteger.ONE),n).compareTo(BigInteger.ONE)!=0)  return false;
+            if (b.modPow(n.subtract(BigInteger.ONE),n).compareTo(BigInteger.ONE)!=0){
+//                System.out.println("hello2!"+b+" "+n);
+                return false;
+            }
 //            if (criterioExtendido(b,n)) return false; //Comprobacion muy costosa con BigInteger
         }
         return true;
@@ -29,9 +32,12 @@ public class FermatBig {
 
     public static SortedSet<BigInteger> numAle(BigInteger n, int m) {
         SortedSet<BigInteger> result = new TreeSet<>();
-        while (result.size() != m && n.subtract(BigInteger.ONE).compareTo(BigInteger.valueOf(result.size()))!= 0) {
-            result.add(new BigInteger(n.bitLength(),new Random()));
+        while (result.size() != m && n.subtract(BigInteger.ONE).compareTo(BigInteger.valueOf(result.size())) != 0) {
+            result.add((new BigInteger(n.bitLength(),new Random())).add(new BigInteger("1"))); //se suma 1 para prevenir el testigo 0
+//            System.out.println("añadido 1 mas");
+//        System.out.println(result.size()+" "+n.subtract(BigInteger.ONE));
         }
+//        System.out.println(result.size()+"2");
         return result;
     }
 
@@ -39,9 +45,9 @@ public class FermatBig {
 
     private static boolean criterioExtendido(BigInteger b, BigInteger n) {
         BigInteger mcd;
-        BigInteger[] dAndR;
+        BigInteger[] dAndR; //cociente y resto
         BigInteger nHalf = n;
-        int nlog = 100;
+        int nlog = 0;
         while(nHalf.compareTo(BigInteger.ONE)>0){
             nHalf=nHalf.shiftRight(1);
             nlog++;
@@ -52,7 +58,7 @@ public class FermatBig {
 //              equivalente a: mcd = mcd((int) (Math.pow(b,k)-1),n);
 //              Hay una perdida enorme de tiempo en este calculo, incluso para numeos en el rango de long
 //              mcd = n.gcd(b.pow(dAndR[0].intValueExact()).subtract(BigInteger.ONE)); 
-                mcd = mcd(n,b.pow(dAndR[0].intValueExact()).subtract(BigInteger.ONE));
+                mcd = mcd(n,b.pow(dAndR[0].intValue()).subtract(BigInteger.ONE));
                 if(mcd.compareTo(BigInteger.ONE)>0&&(mcd.compareTo(n)<0)) return true;
             }
         }

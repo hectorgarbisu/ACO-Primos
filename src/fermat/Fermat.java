@@ -7,15 +7,19 @@ public class Fermat {
     public static boolean esPrimo(int n, int m) {
         SortedSet<Integer> list = numAle(n, m);
         for (Integer b : list) {
-            if (expMod(b,n-1,n) != 1)  return false; // expMod debe operar con long
-            if (criterioExtendido(b,n)) return false;
+            if (expMod(b,n-1,n) != 1){
+//                System.out.println("hello1!"+b);
+                return false;
+            }
+//            if (criterioExtendido(b,n)) return false;
         }
         return true;
     }
  
     public static int mcd(int a, int b) {
+        int r;
         while (b != 0) {
-            int r = a % b;
+            r = a % b;
             a = b;
             b = r;
         }
@@ -25,8 +29,9 @@ public class Fermat {
     public static SortedSet<Integer> numAle(int n, int m) {
         SortedSet<Integer> result = new TreeSet<>();
         while (result.size() != m && result.size() != n - 1) {
-            result.add((int) (Math.random() * (n - 1) + 1));
+            result.add((int) (Math.random() * (n - 1) + 1)); //se suma 1 para prevenir el testigo 0
         }
+//        System.out.println(result.size()+"1");
         return result;
     }
 
@@ -35,7 +40,8 @@ public class Fermat {
     private static boolean criterioExtendido(int b, int n) {
         int k;
         int mcd;
-        for(int j = 2;j<(Math.log(n)/Math.log(2));j++){
+        int log = (int) (Math.log(n)/Math.log(2));
+        for(int j = 2;j<log;j++){
             if((n-1)%Math.pow(2,j)==0){  
                 k = (int) ((n-1)/Math.pow(2,j)); //Esta operacion es segura
                 mcd = mcd((int) (Math.pow(b,k)-1),n);//falta de precision <

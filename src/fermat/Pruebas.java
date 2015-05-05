@@ -38,7 +38,10 @@ public class Pruebas {
             if(!rPrimo) erroresP++;
             rNoPrimo = FermatBig.esPrimo(noPrimo,m);
             if(rNoPrimo) erroresNP++;
-            if(verbose)System.out.println("primo "+primo+" : "+rPrimo+", no primo "+noPrimo+": "+rNoPrimo);
+            if(verbose){
+                if(primo.bitLength()<64)    System.out.println("primo "+primo+" : "+rPrimo+", no primo "+noPrimo+": "+rNoPrimo);
+                else    System.out.println("primo de "+primo.bitLength()+"bits : "+rPrimo+", no primo de "+noPrimo.bitLength()+"bits: "+rNoPrimo);
+            }
         }
         System.out.println("Resultados para BigInteger con m="+m);
         System.out.println("Hubo "+erroresP+" erroresP");
