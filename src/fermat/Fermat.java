@@ -8,10 +8,9 @@ public class Fermat {
         SortedSet<Integer> list = numAle(n, m);
         for (Integer b : list) {
             if (expMod(b,n-1,n) != 1){
-//                System.out.println("hello1!"+b);
                 return false;
             }
-//            if (criterioExtendido(b,n)) return false;
+            if (criterioExtendido(b,n)) return false;
         }
         return true;
     }
@@ -29,13 +28,11 @@ public class Fermat {
     public static SortedSet<Integer> numAle(int n, int m) {
         SortedSet<Integer> result = new TreeSet<>();
         while (result.size() != m && result.size() != n - 1) {
-            result.add((int) (Math.random() * (n - 1) + 1)); //se suma 1 para prevenir el testigo 0
+            int newElem = (int) (Math.random() * (n - 1) + 1);
+            result.add(newElem); //se suma 1 para prevenir el testigo 0
         }
-//        System.out.println(result.size()+"1");
         return result;
     }
-
-
 
     private static boolean criterioExtendido(int b, int n) {
         int k;
@@ -50,17 +47,17 @@ public class Fermat {
         }
         return false;
     }
+    
     private static long expMod(int base,int exp,int module){ //devuelve a^b%c
-//        System.out.println("expMod("+base+","+exp+","+module+")");
         int[] binaryDigits = binaryDigits(exp);
         int[] factorModules = factorModules(base,binaryDigits,module);
         long result = 1;
         for (int factorModule : factorModules) {
             result = (result*(factorModule))%module;
-//            System.out.println(result);
         }
         return result;
     }
+    
     private static int[] binaryDigits(int a) {
         int[] factors = new int[(int)(Math.log(a)/Math.log(2))+1];
         for (int i = 0; i < factors.length; i++) {
@@ -79,9 +76,7 @@ public class Fermat {
             lastModule= (long)(Math.pow(lastModule,2)%module);
             if(digits[i]==0) factorModules[i]=1;
             else factorModules[i] = (int) lastModule;
-//            System.out.println(lastModule);
         }
         return factorModules;
     }
-
 }

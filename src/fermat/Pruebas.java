@@ -1,8 +1,6 @@
 
 package fermat;
-
 import java.math.BigInteger;
-
 
 public class Pruebas {
     
@@ -22,9 +20,10 @@ public class Pruebas {
             if(verbose)System.out.println("primo "+primo+" : "+rPrimo+", no primo "+noPrimo+": "+rNoPrimo);
         }
         System.out.println("Resultados para Long Int con m="+m);
-        System.out.println("Hubo "+erroresP+" erroresP");
-        System.out.println("Hubo "+erroresNP+" erroresNP");
+        System.out.println("Hubo "+erroresP+" erroresP en "+primos.length+" primos");
+        System.out.println("Hubo "+erroresNP+" erroresNP en "+primos.length+" compuestos");
     }
+    
     public static void probarBigInteger(int m, boolean verbose){
         BigInteger[] primos = ColeccionPrimos.getBigIntegerPrimeList();
         BigInteger noPrimo;
@@ -44,15 +43,15 @@ public class Pruebas {
             }
         }
         System.out.println("Resultados para BigInteger con m="+m);
-        System.out.println("Hubo "+erroresP+" erroresP");
-        System.out.println("Hubo "+erroresNP+" erroresNP\n");
+        System.out.println("Hubo "+erroresP+" erroresP en "+primos.length+" primos\t");
+        System.out.println("Hubo "+erroresNP+" erroresNP en "+primos.length+" compuestos");
     }
+    
     public static void probarLong(int[] ms){
         for (int m : ms) probarLong(m,false);
-    }    
+    } 
+    
     public static void probarBigInteger(int[] ms){
         for (int m : ms) probarBigInteger(m,false);
     }
-
-   
 }

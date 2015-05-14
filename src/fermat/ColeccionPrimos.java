@@ -1,5 +1,4 @@
 package fermat;
-
 import java.math.BigInteger;
 
 public class ColeccionPrimos {
